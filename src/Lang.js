@@ -59,7 +59,7 @@ class Lang {
                     title:"投资",
                     referId:"推荐人编号",
                     amount:"投资金额",
-                    amountTips:"100 SERO起投",
+                    amountTips:"10 SERO起投",
                     availableSERO:"可用的余额",
                     total:"应付合计",
                     estimate:"预计收益",
@@ -81,7 +81,7 @@ class Lang {
         },
         toast:{
             lessAmount:"SERO余额不足以支付本次交易.",
-            minInvest:"最小投资金额为 100 SERO.",
+            minInvest:"最小投资金额为 10 SERO.",
             tx:"交易提交成功, 等待区块打包交易, 交易哈希: ",
             copySuccess:"拷贝成功! ",
 
@@ -147,7 +147,7 @@ class Lang {
                     referId:"Refer ID",
                     ticket:"Tickets",
                     amount:"Invet Amount",
-                    amountTips:"At least invest 100 SERO",
+                    amountTips:"At least invest 10 SERO",
                     availableSERO:"Available Blance",
                     availableExchange:"Max Exchange",
                     total:"Total",
@@ -167,7 +167,7 @@ class Lang {
         },
         toast:{
             lessAmount:"The balance is not enough to pay for this transaction.",
-            minInvest:"Invest Amount at least 100 SERO.",
+            minInvest:"Invest Amount at least 10 SERO.",
             tx:"The transaction was submitted successfully, waiting for the block to be packaged, and the transaction hash: ",
             copySuccess:"Copy to clipboard successfully! ",
         },

@@ -498,7 +498,7 @@ class ContentPage extends Component {
                     cb(false)
                 }
                 message.warn(Lang[that.state.lang].toast.lessAmount);
-            }  else if (parseFloat(amountSero) < 100) {
+            }  else if (parseFloat(amountSero) < 10) {
                 if (cb) {
                     cb(false)
                 }
