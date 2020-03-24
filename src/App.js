@@ -16,7 +16,7 @@ import {
     ConfigProvider,
     Input,
     Rate,
-    message, Form, InputNumber, Radio
+    message, Form, InputNumber, Radio, Progress
 } from "antd";
 
 import {WaterWave, Pie} from 'ant-design-pro/lib/Charts';
@@ -35,7 +35,8 @@ import identicon from "identicon.js"
 import Contract from "./component/contract"
 // import popup from 'popup-js-sdk'
 import seropp from 'sero-pp'
-import logo from "./logo.png"
+
+import Head from './head.png'
 
 let ct = new Contract();
 let Lang = new Language();
@@ -46,7 +47,6 @@ let contract = serojs.callContract(ct.abi, ct.address);
 
 let decimal = new BigNumber(10).pow(18);
 const {Countdown} = Statistic;
-
 
 
 const openNotificationWithIcon = (type, message, desc) => {
@@ -198,7 +198,7 @@ class ContentPage extends Component {
     componentDidMount() {
         let that = this;
         seropp.init(ct.dapp, function (res) {
-            if(res){
+            if (res) {
                 that.showSelectAccount();
                 if (!that.state.showAccountSelect) {
                     setTimeout(function () {
@@ -322,7 +322,7 @@ class ContentPage extends Component {
                 isKing: false,
             }
             if (res !== "0x0") {
-                if(res){
+                if (res) {
                     let data = res;
                     detail = {
                         referId: data[0] == 'JFVVW2ITNSJHF' ? "" : data[0],
@@ -373,10 +373,10 @@ class ContentPage extends Component {
             data: packData
         };
 
-        seropp.call(callParams, function (callData,error) {
-            if(error){
-                console.log("error::",error);
-            }else{
+        seropp.call(callParams, function (callData, error) {
+            if (error) {
+                console.log("error::", error);
+            } else {
                 let res = contract.unPackData(_method, callData);
                 callback(res);
             }
@@ -404,10 +404,10 @@ class ContentPage extends Component {
             cy: cy,
         };
         // executeData["gas"] = pullup.sero.estimateGas(estimateParam);
-        seropp.estimateGas(estimateParam, function (gas,error) {
-            if(error){
+        seropp.estimateGas(estimateParam, function (gas, error) {
+            if (error) {
                 message.error(error);
-            }else{
+            } else {
                 executeData["gas"] = gas;
                 seropp.executeContract(executeData, function (res) {
                     callback(res);
@@ -488,7 +488,6 @@ class ContentPage extends Component {
             let referId = form.getFieldValue("ReferId");
             let password = form.getFieldValue("Password");
 
-            // let ticketAsnow = new BigNumber(amountSero).dividedBy(10).dividedBy(that.state.ct_rate).toFixed(6);
 
             if (that.state.ct_details.referId) {
                 referId = that.state.ct_details.referId;
@@ -498,7 +497,7 @@ class ContentPage extends Component {
                     cb(false)
                 }
                 message.warn(Lang[that.state.lang].toast.lessAmount);
-            }  else if (parseFloat(amountSero) < 10) {
+            } else if (parseFloat(amountSero) < 10) {
                 if (cb) {
                     cb(false)
                 }
@@ -599,7 +598,6 @@ class ContentPage extends Component {
     //==== Buy Ticket begin
 
 
-
     //==== Buy Ticket end
 
     render() {
@@ -638,7 +636,7 @@ class ContentPage extends Component {
         const countDown = nextShareTime();
         let totalReturnDay = this.state.ct_balanceOfSero ? new BigNumber(this.state.ct_balanceOfSero).dividedBy(30).toFixed(6) : "0";
         let returnPercent = 0;
-        console.log("this.state.ct_details.returnAmount:",this.state.ct_details.returnAmount);
+        console.log("this.state.ct_details.returnAmount:", this.state.ct_details.returnAmount);
         if (this.state.ct_details.returnAmount && parseFloat(this.state.ct_details.returnAmount) > 0) {
             let a = parseFloat(this.state.ct_details.returnAmount);
             let b = new BigNumber(this.state.ct_details.amount).multipliedBy(this.state.ct_details.profitLevel).toString(10);
@@ -647,66 +645,73 @@ class ContentPage extends Component {
 
         // let showCountDown = new Date(staticTimestamp * 1000).getUTCDate() === parseInt(new Date().getUTCDate());
 
-        let showCountDown = Math.ceil((staticTimestamp * 1000)/(600*1000)) === nextShareTime()/(600*1000);
+        let showCountDown = Math.ceil((staticTimestamp * 1000) / (600 * 1000)) === nextShareTime() / (600 * 1000);
         return (
-            <div className="App" style={{marginTop:'80px'}}>
-                <Content style={{padding: '0 8px'}}>
-                    <div style={{background: '#fff', padding: 5, minHeight: document.body.clientHeight}}>
-
-                        <List itemLayout="vertical" size="large" rowKey="1">
-                            <List.Item>
-                                <Skeleton loading={loading} avatar>
-                                    <Descriptions title={
-                                        <h1>{Lang[this.state.lang].account.title.utxo} <Button size="small"
-                                                                                               onClick={() => {
-                                                                                                   this.setState({
-                                                                                                       showAccountSelect: true
-                                                                                                   })
-                                                                                               }}>{Lang[this.state.lang].account.title.swith}</Button>
-                                        </h1>}/>
+            <div className="App" style={{marginTop: '0px'}}>
+                <div className="header-n">
+                    <img src={Head} width={"100%"}/>
+                </div>
+                <div className="content-n">
+                    <div className="account-n">
+                        <div style={{
+                            fontSize: '14px',
+                            margin: "5px",
+                            color: '#fff'
+                        }}>{Lang[this.state.lang].account.title.utxo}</div>
+                        <div className={"account-nr"}>
+                            <Row>
+                                <Col span={18}>
+                                    <span
+                                        className={"spanx"}>{accountName ? accountName.slice(0, 10) + "..." + accountName.slice(-10) : ""}{this.state.ct_details.isKing ?
+                                        <Tag color="gold">VIP</Tag> : ""}</span>
+                                </Col>
+                                <Col span={6} style={{textAlign: 'center'}}>
+                                    <Button size="small" type={"primary"}
+                                            onClick={() => {
+                                                this.setState({
+                                                    showAccountSelect: true
+                                                })
+                                            }}>{Lang[this.state.lang].account.title.swith}</Button>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <p style={{textAlign: 'center', marginTop: '5px', color: '#fff'}}>
+                                    {this.state.balanceSero} SERO
+                                </p>
+                            </Row>
+                            <p style={{textAlign: 'center'}}>
+                                <Button size={"small"} type={"primary"} onClick={() => this.showDeposit()}>充值</Button>
+                            </p>
+                        </div>
+                    </div>
+                    <div className={"contract-tn"}>
+                        <div className={"contract-dn"}>
+                            <div className="contract-n">
+                                <h2 style={{
+                                    textAlign: 'center',
+                                    fontSize: '16px',
+                                    color: '#fff',
+                                    marginTop: '10px'
+                                }}>{Lang[this.state.lang].account.title.contract}</h2>
+                                <Divider/>
+                                <div>
                                     <Row>
-                                        <Col span={24}>
-                                            <List.Item.Meta
-                                                avatar={<p><Avatar shape="square" size={64}
-                                                                   src={currentAccount.avatar}/></p>}
-                                                title={
-                                                    <small>{accountName ? accountName.slice(0, 10) + "..."+accountName.slice(-10) : ""}{this.state.ct_details.isKing ?
-                                                        <Tag color="gold">VIP</Tag> : ""}</small>
-                                                }
-                                                description={<Rate count={4}
-                                                                   value={this.state.ct_details.star ? this.state.ct_details.star : 0}
-                                                                   disabled/>}
-                                            />
-                                        </Col>
-
-                                    </Row>
-                                    <Row style={{textAlign: 'center'}}>
-                                        <Col span={24}>
-                                            <Statistic title={Lang[this.state.lang].account.title.balanceSero}
-                                                       value={this.state.balanceSero} precision={6}/>
-                                        </Col>
-
-                                    </Row>
-
-                                </Skeleton>
-                            </List.Item>
-
-                            <List.Item>
-                                <Skeleton loading={loading}>
-                                    <Descriptions title={<h1>{Lang[this.state.lang].account.title.contract}</h1>}/>
-
-                                    <Row style={{textAlign: 'center'}}>
-                                        <Col span={12}>
-                                            <Statistic title={Lang[this.state.lang].account.title.estimatedTotal}
-                                                       value={new BigNumber(this.state.ct_details.amount ? this.state.ct_details.amount : 0).multipliedBy(this.state.ct_details.profitLevel ? this.state.ct_details.profitLevel : 0).toFixed(6)}
-                                                       precision={6}/>
-                                            <Button style={{marginTop: 16}} type="primary" onClick={() => {
+                                        <Col span={18}><span
+                                            className={"spanx"}>{Lang[this.state.lang].account.title.estimatedTotal}:{new BigNumber(this.state.ct_details.amount ? this.state.ct_details.amount : 0).multipliedBy(this.state.ct_details.profitLevel ? this.state.ct_details.profitLevel : 0).toFixed(6)}</span></Col>
+                                        <Col span={6} style={{textAlign: 'center'}}>
+                                            {/*<Button size={"small"}*/}
+                                            {/*        type={"primary"}><span>{Lang[this.state.lang].account.button.invest}</span></Button>*/}
+                                            <Button size={"small"}
+                                                    type={"primary"} onClick={() => {
                                                 this.setState({showInvest: true})
                                             }}>{Lang[this.state.lang].account.button.invest}</Button>
                                         </Col>
-                                        <Col span={12}>
-                                            <Statistic title={Lang[this.state.lang].account.title.staticIncome}
-                                                       value={this.state.ct_details.dayProfit} precision={6}/>
+                                    </Row>
+                                    <p/>
+                                    <Row>
+                                        <Col span={18}><span
+                                            className={"spanx"}>{Lang[this.state.lang].account.title.staticIncome} {this.state.ct_details.dayProfit}</span></Col>
+                                        <Col span={6} style={{textAlign: 'center'}}>
                                             {
                                                 showCountDown ?
                                                     <Countdown style={{marginTop: 14}} title="" format="HH:mm:ss"
@@ -719,18 +724,20 @@ class ContentPage extends Component {
                                             }
                                         </Col>
                                     </Row>
-                                    <Row style={{textAlign: 'center'}}>
-                                        <p/>
-
-                                        <Col span={12}>
-                                            <Statistic title={Lang[this.state.lang].account.title.withdraw}
-                                                       value={new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).toFixed(6)}
-                                                       precision={6}/>
-                                            <Button style={{marginTop: 16}} disabled={new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).comparedTo(0) < 1} type="primary" onClick={() => {
+                                    <p/>
+                                    <Row>
+                                        <Col span={18}><span
+                                            className={"spanx"}>{Lang[this.state.lang].account.title.withdraw}:{new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).toFixed(6)}</span></Col>
+                                        <Col span={6} style={{textAlign: 'center'}}>
+                                            <Button style={{marginTop: 16}}
+                                                    disabled={new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).comparedTo(0) < 1}
+                                                    type="primary" onClick={() => {
                                                 this.withdraw()
                                             }}>{Lang[this.state.lang].account.button.withdraw}</Button>
                                         </Col>
                                     </Row>
+                                </div>
+                                <div>
                                     {
                                         showChart ?
                                             <Row style={{textAlign: 'center'}}>
@@ -765,70 +772,68 @@ class ContentPage extends Component {
                                                 </Col>
                                             </Row> : ""
                                     }
-                                    <Divider dashed={true}/>
-                                    <Row style={{textAlign: 'center'}}>
-                                        <Col span={12}>
-                                            <Statistic title={Lang[this.state.lang].account.title.totalReturnDay}
-                                                       value={totalReturnDay} precision={6}/>
-                                        </Col>
-                                        <Col span={12}>
-                                            <Statistic title={Lang[this.state.lang].account.title.dayIncome}
-                                                       value={this.state.ct_details.dayProfit&&parseFloat(totalReturnDay)>0 ? new BigNumber(this.state.ct_details.dayProfit).multipliedBy(100).dividedBy(totalReturnDay).toFixed(2) : "0"}
-                                                       suffix={"%"}/>
-                                        </Col>
+                                </div>
+                                <Divider dashed={true}/>
+                                <Row style={{textAlign: 'center'}}>
+                                    <Col span={12}>
+                                        <Statistic title={Lang[this.state.lang].account.title.totalReturnDay}
+                                                   value={totalReturnDay} precision={6}/>
+                                    </Col>
+                                    <Col span={12}>
+                                        <Statistic title={Lang[this.state.lang].account.title.dayIncome}
+                                                   value={this.state.ct_details.dayProfit && parseFloat(totalReturnDay) > 0 ? new BigNumber(this.state.ct_details.dayProfit).multipliedBy(100).dividedBy(totalReturnDay).toFixed(2) : "0"}
+                                                   suffix={"%"}/>
+                                    </Col>
 
-                                    </Row>
-                                    <Row style={{textAlign: 'center'}}>
-                                        <p/>
-                                        <Col span={12}>
-                                            <Statistic title={Lang[this.state.lang].account.title.areaTotal}
-                                                       value={this.state.ct_details.largeAreaTotal} precision={6}/>
-                                        </Col>
-                                        <Col span={12}>
-                                            <Statistic title={Lang[this.state.lang].account.title.areaOtherTotal}
-                                                       value={new BigNumber(this.state.ct_details.achievement).minus(new BigNumber(this.state.ct_details.largeAreaTotal)).toFixed(6)}
-                                                       precision={6}/>
-                                        </Col>
-                                    </Row>
-                                </Skeleton>
-                            </List.Item>
+                                </Row>
+                                <Row style={{textAlign: 'center'}}>
+                                    <p/>
+                                    <Col span={12}>
+                                        <Statistic title={Lang[this.state.lang].account.title.areaTotal}
+                                                   value={this.state.ct_details.largeAreaTotal} precision={6}/>
+                                    </Col>
+                                    <Col span={12}>
+                                        <Statistic title={Lang[this.state.lang].account.title.areaOtherTotal}
+                                                   value={new BigNumber(this.state.ct_details.achievement).minus(new BigNumber(this.state.ct_details.largeAreaTotal)).toFixed(6)}
+                                                   precision={6}/>
+                                    </Col>
+                                </Row>
 
-                            <List.Item>
-                                <Skeleton loading={loading}>
-                                    <Descriptions title={<h1>{Lang[this.state.lang].project.title}</h1>}>
-                                        <Descriptions.Item label={Lang[this.state.lang].project.contractAddress}>
-                                            <small>{ct.address}</small>
-                                        </Descriptions.Item>
-                                    </Descriptions>
-
-                                    <Row>
-                                        <Col span={8}>
-                                            <Statistic title={Lang[this.state.lang].project.rate}
-                                                       value={this.state.ct_rate} precision={2}
-                                                       valueStyle={{color: '#3f8600'}}/>
-                                        </Col>
-                                    </Row>
-                                    <Divider dashed={true}/>
-                                    <Descriptions title={Lang[this.state.lang].account.title.investDetail}>
-                                        <Descriptions.Item
-                                            label={Lang[this.state.lang].account.title.id}>{this.state.ct_details.id}</Descriptions.Item>
-                                        <Descriptions.Item
-                                            label={Lang[this.state.lang].account.title.referId}>{this.state.ct_details.referId}</Descriptions.Item>
-                                        <Descriptions.Item
-                                            label={Lang[this.state.lang].account.title.areaId}>{this.state.ct_details.largeAreaId}</Descriptions.Item>
-                                        <Descriptions.Item
-                                            label={Lang[this.state.lang].account.title.totalInvest}>{this.state.ct_details.amount}</Descriptions.Item>
-                                        <Descriptions.Item
-                                            label={Lang[this.state.lang].account.title.profitLevel}>{this.state.ct_details.profitLevel}</Descriptions.Item>
-                                        <Descriptions.Item
-                                            label={Lang[this.state.lang].account.title.latestTime}>{convertUTCDate(staticTimestamp)}</Descriptions.Item>
-                                    </Descriptions>
-                                </Skeleton>
-                            </List.Item>
-
-                        </List>
+                            </div>
+                        </div>
                     </div>
-                </Content>
+
+                    <div className="contract-detail-n">
+                        <Skeleton loading={loading}>
+                            <Descriptions
+                                title={<h2 style={{color: '#fff'}}>{Lang[this.state.lang].project.title}</h2>}>
+                                <Descriptions.Item label={Lang[this.state.lang].project.contractAddress}>
+                                    <small>{ct.address}</small>
+                                </Descriptions.Item>
+                            </Descriptions>
+
+                            <Divider dashed={true}/>
+                            <Descriptions title={<h4
+                                style={{color: '#fff'}}>{Lang[this.state.lang].account.title.investDetail}</h4>}>
+                                <Descriptions.Item
+                                    label={Lang[this.state.lang].account.title.id}>{this.state.ct_details.id}</Descriptions.Item>
+                                <Descriptions.Item
+                                    label={Lang[this.state.lang].account.title.referId}>{this.state.ct_details.referId}</Descriptions.Item>
+                                <Descriptions.Item
+                                    label={Lang[this.state.lang].account.title.areaId}>{this.state.ct_details.largeAreaId}</Descriptions.Item>
+                                <Descriptions.Item
+                                    label={Lang[this.state.lang].account.title.totalInvest}>{this.state.ct_details.amount}</Descriptions.Item>
+                                <Descriptions.Item
+                                    label={Lang[this.state.lang].account.title.profitLevel}>{this.state.ct_details.profitLevel}</Descriptions.Item>
+                                <Descriptions.Item
+                                    label={Lang[this.state.lang].account.title.latestTime}>{convertUTCDate(staticTimestamp)}</Descriptions.Item>
+                            </Descriptions>
+                        </Skeleton>
+                    </div>
+                </div>
+                <div className="footer-n">
+                    <span>风险投资 谨慎参与</span>
+                </div>
 
                 <SelectAccount visible={showAccountSelect} selectAccount={this.selectAccount}
                                hiddenAccount={this.hiddenAccount}/>
@@ -844,7 +849,7 @@ class ContentPage extends Component {
                         <canvas id="qrImg"></canvas>
                         <p style={{wordBreak: 'normal', whiteSpace: 'pre-wrap', wordWrap: 'break-word'}}>
                             <small>{this.state.currentAccount.MainPKr}</small></p>
-                        <Button className='copyTxt' onClick={() => {
+                        <Button className='copyTxt' type="primary" onClick={() => {
                             copy(this.state.currentAccount.MainPKr);
                             message.success('Copy to clipboard successfully');
                         }}>{Lang[this.state.lang].account.modal.deposit.copy}</Button>
@@ -860,7 +865,6 @@ class ContentPage extends Component {
                     sero={this.state.balanceSero}
                     asnow={this.state.ct_details.asnowBalances}
                     calcuPrincipalProfit={this.calcuPrincipalProfit}
-                    rate={this.state.ct_rate}
                     lang={this.state.lang}
                     times={this.state.ct_details.profitLevel}
                     referId={this.state.ct_details.referId}
@@ -913,21 +917,21 @@ class App extends Component {
     render() {
         const {locale} = this.state;
         return (
-            <div className="App">
+            <div className="App" style={{height: document.documentElement.clientHeight}}>
                 <Layout className="layout">
-                    <Header className="header">
-                        <div className="logo"><img src={logo}/></div>
-                        <div className="change-locale">
-                            <Radio.Group value={locale} onChange={this.changeLocale}>
-                                <Radio.Button key="en" value={enUS}>
-                                    English
-                                </Radio.Button>
-                                <Radio.Button key="cn" value={zhCN}>
-                                    中文
-                                </Radio.Button>
-                            </Radio.Group>
-                        </div>
-                    </Header>
+                    {/*<Header className="header">*/}
+                    {/*    <div className="logo"><img src={logo}/></div>*/}
+                    {/*    <div className="change-locale">*/}
+                    {/*        <Radio.Group value={locale} onChange={this.changeLocale}>*/}
+                    {/*            <Radio.Button key="en" value={enUS}>*/}
+                    {/*                English*/}
+                    {/*            </Radio.Button>*/}
+                    {/*            <Radio.Button key="cn" value={zhCN}>*/}
+                    {/*                中文*/}
+                    {/*            </Radio.Button>*/}
+                    {/*        </Radio.Group>*/}
+                    {/*    </div>*/}
+                    {/*</Header>*/}
 
                     <ConfigProvider locale={locale}>
                         <ContentPage key={locale ? locale.locale : 'en'}/>
