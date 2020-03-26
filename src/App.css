@@ -154,3 +154,11 @@ td span{
     white-space: normal;
     word-break: break-all;
 }
+
+.ant-modal-header {
+    background: #6494fa !important;
+}
+
+.ant-modal-content {
+    background-color: #6494fa !important;
+}
