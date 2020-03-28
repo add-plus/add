@@ -661,12 +661,22 @@ class ContentPage extends Component {
                         <div className={"account-nr"}>
                             <Row>
                                 <Col span={18}>
-                                    <span
-                                        className={"spanx"}>{accountName ? accountName.slice(0, 10) + "..." + accountName.slice(-10) : ""}{this.state.ct_details.isKing ?
-                                        <Tag color="gold">VIP</Tag> : ""}</span>
+
+                                    <List.Item.Meta
+                                        title={
+                                            <small>{accountName ? accountName.slice(0, 10) + "..."+accountName.slice(-10) : ""}{this.state.ct_details.isKing ?
+                                                <Tag color="gold">VIP</Tag> : ""}</small>
+                                        }
+                                        description={<Rate count={4}
+                                                           value={this.state.ct_details.star ? this.state.ct_details.star : 0}
+                                                           disabled/>}
+                                    />
+                                    {/*<span*/}
+                                    {/*    className={"spanx"}>{accountName ? accountName.slice(0, 10) + "..." + accountName.slice(-10) : ""}{this.state.ct_details.isKing ?*/}
+                                    {/*    <Tag color="gold">VIP</Tag> : ""}</span>*/}
                                 </Col>
                                 <Col span={6} style={{textAlign: 'center'}}>
-                                    <Button size="small" type={"primary"}
+                                    <Button type={"primary"}
                                             onClick={() => {
                                                 this.setState({
                                                     showAccountSelect: true
@@ -675,12 +685,12 @@ class ContentPage extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <p style={{textAlign: 'center', marginTop: '5px', color: '#fff'}}>
+                                <p style={{textAlign: 'center', marginTop: '5px', color: '#fff',fontSize: '18px'}}>
                                     {this.state.balanceSero} SERO
                                 </p>
                             </Row>
                             <p style={{textAlign: 'center'}}>
-                                <Button size={"small"} type={"primary"} onClick={() => this.showDeposit()}>充值</Button>
+                                <Button type={"primary"} onClick={() => this.showDeposit()}>充值</Button>
                             </p>
                         </div>
                     </div>
@@ -701,7 +711,7 @@ class ContentPage extends Component {
                                         <Col span={6} style={{textAlign: 'center'}}>
                                             {/*<Button size={"small"}*/}
                                             {/*        type={"primary"}><span>{Lang[this.state.lang].account.button.invest}</span></Button>*/}
-                                            <Button size={"small"}
+                                            <Button style={{float:"left"}}
                                                     type={"primary"} onClick={() => {
                                                 this.setState({showInvest: true})
                                             }}>{Lang[this.state.lang].account.button.invest}</Button>
@@ -729,7 +739,7 @@ class ContentPage extends Component {
                                         <Col span={18}><span
                                             className={"spanx"}>{Lang[this.state.lang].account.title.withdraw}:{new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).toFixed(6)}</span></Col>
                                         <Col span={6} style={{textAlign: 'center'}}>
-                                            <Button style={{marginTop: 16}}
+                                            <Button style={{marginTop: 16, float:"left"}}
                                                     disabled={new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).comparedTo(0) < 1}
                                                     type="primary" onClick={() => {
                                                 this.withdraw()
