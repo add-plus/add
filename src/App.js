@@ -185,17 +185,14 @@ class ContentPage extends Component {
     }
 
     componentWillMount() {
-        let lang = localStorage.getItem("lang");
-        if (!lang) {
-            lang = "zh_CN";
-            localStorage.setItem("lang", "zh_CN");
-        }
-        this.setState({
-            lang: lang,
-        })
-    }
-
-    componentDidMount() {
+        // let lang = localStorage.getItem("lang");
+        // if (!lang) {
+        //     lang = "zh_CN";
+        //     localStorage.setItem("lang", "zh_CN");
+        // }
+        // this.setState({
+        //     lang: lang,
+        // })
         let that = this;
         seropp.init(ct.dapp, function (res) {
             if (res) {
@@ -207,6 +204,12 @@ class ContentPage extends Component {
 
                     }, 3000)
                 }
+                seropp.getInfo(function (info) {
+                    localStorage.setItem("lang", info.language);
+                    that.setState({
+                        lang: info.language,
+                    })
+                });
 
                 setInterval(function () {
                     that.getDetail();
