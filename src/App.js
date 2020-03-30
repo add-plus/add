@@ -530,16 +530,16 @@ class ContentPage extends Component {
         });
     };
 
-    calcuPrincipalProfit = (sero, cb) => {
-        if (sero) {
-            let seroHex = "0x" + new BigNumber(sero).multipliedBy(decimal).toString(16);
-            this.callMethod("calcuPrincipalProfit", [seroHex], function (res) {
-                if (cb) {
-                    cb(res);
-                }
-            })
-        }
-    }
+    // calcuPrincipalProfit = (sero, cb) => {
+    //     if (sero) {
+    //         let seroHex = "0x" + new BigNumber(sero).multipliedBy(decimal).toString(16);
+    //         this.callMethod("calcuPrincipalProfit", [seroHex], function (res) {
+    //             if (cb) {
+    //                 cb(res);
+    //             }
+    //         })
+    //     }
+    // }
 
     saveInvestFormRef = formRef => {
         this.formRef2 = formRef;
@@ -707,7 +707,7 @@ class ContentPage extends Component {
                                 <div>
                                     <Row>
                                         <Col span={18}><span
-                                            className={"spanx"}>{Lang[this.state.lang].account.title.estimatedTotal}:{new BigNumber(this.state.ct_details.amount ? this.state.ct_details.amount : 0).multipliedBy(this.state.ct_details.profitLevel ? this.state.ct_details.profitLevel : 0).toFixed(6)}</span></Col>
+                                            className={"spanx"}>{Lang[this.state.lang].account.title.estimatedTotal}:{new BigNumber(this.state.ct_details.amount ? this.state.ct_details.amount : 0).multipliedBy(this.state.ct_details.profitLevel ? this.state.ct_details.profitLevel : 0).toFixed(2)}</span></Col>
                                         <Col span={6} style={{textAlign: 'center'}}>
                                             {/*<Button size={"small"}*/}
                                             {/*        type={"primary"}><span>{Lang[this.state.lang].account.button.invest}</span></Button>*/}
@@ -737,7 +737,7 @@ class ContentPage extends Component {
                                     <p/>
                                     <Row>
                                         <Col span={18}><span
-                                            className={"spanx"}>{Lang[this.state.lang].account.title.withdraw}:{new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).toFixed(6)}</span></Col>
+                                            className={"spanx"}>{Lang[this.state.lang].account.title.withdraw}:{new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).toFixed(2)}</span></Col>
                                         <Col span={6} style={{textAlign: 'center'}}>
                                             <Button style={{marginTop: 16, float:"left"}}
                                                     disabled={new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).comparedTo(0) < 1}
@@ -787,7 +787,7 @@ class ContentPage extends Component {
                                 <Row style={{textAlign: 'center'}}>
                                     <Col span={12}>
                                         <Statistic title={Lang[this.state.lang].account.title.totalReturnDay}
-                                                   value={totalReturnDay} precision={6}/>
+                                                   value={totalReturnDay} precision={2}/>
                                     </Col>
                                     <Col span={12}>
                                         <Statistic title={Lang[this.state.lang].account.title.dayIncome}
@@ -800,12 +800,12 @@ class ContentPage extends Component {
                                     <p/>
                                     <Col span={12}>
                                         <Statistic title={Lang[this.state.lang].account.title.areaTotal}
-                                                   value={this.state.ct_details.largeAreaTotal} precision={6}/>
+                                                   value={this.state.ct_details.largeAreaTotal} precision={2}/>
                                     </Col>
                                     <Col span={12}>
                                         <Statistic title={Lang[this.state.lang].account.title.areaOtherTotal}
-                                                   value={new BigNumber(this.state.ct_details.achievement).minus(new BigNumber(this.state.ct_details.largeAreaTotal)).toFixed(6)}
-                                                   precision={6}/>
+                                                   value={new BigNumber(this.state.ct_details.achievement).minus(new BigNumber(this.state.ct_details.largeAreaTotal)).toFixed(2)}
+                                                   precision={2}/>
                                     </Col>
                                 </Row>
 
@@ -874,7 +874,7 @@ class ContentPage extends Component {
                     onCreate={this.handleInvestCreate}
                     sero={this.state.balanceSero}
                     asnow={this.state.ct_details.asnowBalances}
-                    calcuPrincipalProfit={this.calcuPrincipalProfit}
+                    // calcuPrincipalProfit={this.calcuPrincipalProfit}
                     lang={this.state.lang}
                     times={this.state.ct_details.profitLevel}
                     referId={this.state.ct_details.referId}
