@@ -43,11 +43,11 @@ let Lang = new Language();
 const {Header, Content, Footer} = Layout;
 
 
+
 let contract = serojs.callContract(ct.abi, ct.address);
 
 let decimal = new BigNumber(10).pow(18);
 const {Countdown} = Statistic;
-
 
 const openNotificationWithIcon = (type, message, desc) => {
     notification[type]({
@@ -164,6 +164,7 @@ class ContentPage extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             loading: true,
             showAccountSelect: false,
@@ -598,6 +599,17 @@ class ContentPage extends Component {
     }
 
 
+    showRules = () => {
+        let that = this;
+        Modal.info({
+            title: <span style={{color: "#f3ba44", fontWeight: "600"}}>{Lang[that.state.lang].project.rule}</span>,
+            okText: "OK",
+            icon:"",
+            content: <div>
+                <span style={{'whiteSpace':'pre-wrap', color: "#FFFFFF"}}>{Lang[that.state.lang].toast.rule}</span>
+            </div>
+        })
+    }
     //==== Buy Ticket begin
 
 
@@ -653,6 +665,15 @@ class ContentPage extends Component {
             <div className="App" style={{marginTop: '0px'}}>
                 <div className="header-n">
                     <img src={Head} width={"100%"}/>
+                    <span style={{
+                        float: "left",
+                        padding: "15px",
+                        position: "relative",
+                        top: "-280px",
+                        color: "#f3ba44",
+                        fontWeight: "600"
+                    }} onClick={this.showRules.bind(this)}>{Lang[this.state.lang].project.rule}</span>
+
                 </div>
                 <div className="content-n">
                     <div className="account-n">
@@ -667,16 +688,12 @@ class ContentPage extends Component {
 
                                     <List.Item.Meta
                                         title={
-                                            <small>{accountName ? accountName.slice(0, 10) + "..."+accountName.slice(-10) : ""}{this.state.ct_details.isKing ?
-                                                <Tag color="gold">VIP</Tag> : ""}</small>
+                                            <small>{accountName ? accountName.slice(0, 10) + "..." + accountName.slice(-10) : ""}</small>
                                         }
                                         description={<Rate count={4}
                                                            value={this.state.ct_details.star ? this.state.ct_details.star : 0}
                                                            disabled/>}
                                     />
-                                    {/*<span*/}
-                                    {/*    className={"spanx"}>{accountName ? accountName.slice(0, 10) + "..." + accountName.slice(-10) : ""}{this.state.ct_details.isKing ?*/}
-                                    {/*    <Tag color="gold">VIP</Tag> : ""}</span>*/}
                                 </Col>
                                 <Col span={6} style={{textAlign: 'center'}}>
                                     <Button type={"primary"}
@@ -688,7 +705,7 @@ class ContentPage extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <p style={{textAlign: 'center', marginTop: '5px', color: '#fff',fontSize: '18px'}}>
+                                <p style={{textAlign: 'center', marginTop: '5px', color: '#fff', fontSize: '18px'}}>
                                     {this.state.balanceSero} SERO
                                 </p>
                             </Row>
@@ -714,7 +731,7 @@ class ContentPage extends Component {
                                         <Col span={6} style={{textAlign: 'center'}}>
                                             {/*<Button size={"small"}*/}
                                             {/*        type={"primary"}><span>{Lang[this.state.lang].account.button.invest}</span></Button>*/}
-                                            <Button style={{float:"left"}}
+                                            <Button style={{float: "left"}}
                                                     type={"primary"} onClick={() => {
                                                 this.setState({showInvest: true})
                                             }}>{Lang[this.state.lang].account.button.invest}</Button>
@@ -742,7 +759,7 @@ class ContentPage extends Component {
                                         <Col span={18}><span
                                             className={"spanx"}>{Lang[this.state.lang].account.title.withdraw}:{new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).toFixed(2)}</span></Col>
                                         <Col span={6} style={{textAlign: 'center'}}>
-                                            <Button style={{marginTop: 16, float:"left"}}
+                                            <Button style={{marginTop: 16, float: "left"}}
                                                     disabled={new BigNumber(this.state.ct_details.value ? this.state.ct_details.value : 0).comparedTo(0) < 1}
                                                     type="primary" onClick={() => {
                                                 this.withdraw()
