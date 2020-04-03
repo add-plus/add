@@ -534,17 +534,6 @@ class ContentPage extends Component {
         });
     };
 
-    // calcuPrincipalProfit = (sero, cb) => {
-    //     if (sero) {
-    //         let seroHex = "0x" + new BigNumber(sero).multipliedBy(decimal).toString(16);
-    //         this.callMethod("calcuPrincipalProfit", [seroHex], function (res) {
-    //             if (cb) {
-    //                 cb(res);
-    //             }
-    //         })
-    //     }
-    // }
-
     saveInvestFormRef = formRef => {
         this.formRef2 = formRef;
     };
@@ -607,6 +596,16 @@ class ContentPage extends Component {
             icon:"",
             content: <div>
                 <span style={{'whiteSpace':'pre-wrap', color: "#FFFFFF"}}>{Lang[that.state.lang].toast.rule}</span>
+                <span
+                    style={{color:'#989898'}} onClick={() => {
+                    copy('IFVUSKIRFSIDF');
+                    Modal.success({
+                        content: Lang[that.state.lang].toast.copySuccess,
+                        okText:"OK"
+                    });
+                }}
+                >{Lang[that.state.lang].account.modal.deposit.copy}</span>
+                <br/>
             </div>
         })
     }
@@ -651,16 +650,15 @@ class ContentPage extends Component {
         const countDown = nextShareTime();
         let totalReturnDay = this.state.ct_balanceOfSero ? new BigNumber(this.state.ct_balanceOfSero).dividedBy(30).toFixed(6) : "0";
         let returnPercent = 0;
-        console.log("this.state.ct_details.returnAmount:", this.state.ct_details.returnAmount);
+
         if (this.state.ct_details.returnAmount && parseFloat(this.state.ct_details.returnAmount) > 0) {
             let a = parseFloat(this.state.ct_details.returnAmount);
             let b = new BigNumber(this.state.ct_details.amount).multipliedBy(this.state.ct_details.profitLevel).toString(10);
             returnPercent = (a * 100 / parseFloat(b)).toFixed(2);
         }
 
-        // let showCountDown = new Date(staticTimestamp * 1000).getUTCDate() === parseInt(new Date().getUTCDate());
+        let showCountDown = new Date(staticTimestamp * 1000).getUTCDate() === parseInt(new Date().getUTCDate());
 
-        let showCountDown = Math.ceil((staticTimestamp * 1000) / (600 * 1000)) === nextShareTime() / (600 * 1000);
         return (
             <div className="App" style={{marginTop: '0px'}}>
                 <div className="header-n">
@@ -673,7 +671,6 @@ class ContentPage extends Component {
                         color: "#f3ba44",
                         fontWeight: "600"
                     }} onClick={this.showRules.bind(this)}>{Lang[this.state.lang].project.rule}</span>
-
                 </div>
                 <div className="content-n">
                     <div className="account-n">
@@ -983,18 +980,15 @@ function convertUTCDate(dateTimestamp) {
 
 function nextShareTime() {
     let d = new Date();
-    // d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
-    // let year = d.getUTCFullYear();
-    // let month = d.getUTCMonth();
-    // let day = d.getUTCDate();
-    //
-    // d = new Date(year, month, day, 0, 0, 0);
-    //
-    // let tz = new Date().getTimezoneOffset() / 60;
-    // return d.getTime() + (-tz) * 60 * 60 * 1000;
-    let time = d.getTime() + 600 * 1000;
-    time = time - time % (600 * 1000);
-    return time;
+    d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
+    let year = d.getUTCFullYear();
+    let month = d.getUTCMonth();
+    let day = d.getUTCDate();
+
+    d = new Date(year, month, day, 0, 0, 0);
+
+    let tz = new Date().getTimezoneOffset() / 60;
+    return d.getTime() + (-tz) * 60 * 60 * 1000;
 }
 
 function appendZero(i) {
