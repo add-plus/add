@@ -681,18 +681,18 @@ class ContentPage extends Component {
                         }}>{Lang[this.state.lang].account.title.utxo}</div>
                         <div className={"account-nr"}>
                             <Row>
-                                <Col span={18}>
+                                <Col span={12}>
 
                                     <List.Item.Meta
                                         title={
-                                            <small>{accountName ? accountName.slice(0, 10) + "..." + accountName.slice(-10) : ""}</small>
+                                            <span style={{color:'#fff'}}>{accountName ? accountName.slice(0, 10) + "..." + accountName.slice(-10) : ""}</span>
                                         }
                                         description={<Rate count={4}
                                                            value={this.state.ct_details.star ? this.state.ct_details.star : 0}
                                                            disabled/>}
                                     />
                                 </Col>
-                                <Col span={6} style={{textAlign: 'center'}}>
+                                <Col span={8} style={{textAlign: 'right'}}>
                                     <Button type={"primary"}
                                             onClick={() => {
                                                 this.setState({
