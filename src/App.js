@@ -667,7 +667,7 @@ class ContentPage extends Component {
                         float: "left",
                         padding: "15px",
                         position: "relative",
-                        top: "-280px",
+                        top: "-222px",
                         color: "#f3ba44",
                         fontWeight: "600"
                     }} onClick={this.showRules.bind(this)}>{Lang[this.state.lang].project.rule}</span>
