@@ -117,7 +117,7 @@ class Lang {
 6.系统开源，数据上链，代码写定，去中心化记账，没有后门，不可篡改，自动运行，自动分发。
 7.系统公开合约规则及默认推荐码，玩家可在无推荐人的情况下主动参与。
 8.开源代码查询地址：https://gitee.com/add-plus/add
-9.默认推荐码：IFVUSKIRFSIDF  `,
+9.默认推荐码：DNURO2JH5QDPE  `,
         }
     };
 
@@ -241,7 +241,7 @@ Four Star          In addition to the largest direct sales performance, the tota
 5. Technology Services holds 6%
 6. The system is open source, data is on-chain, code is written, decentralized accounting, no backdoor, cannot be tampered, automatic operation, automatic distribution.
 7. The system shows contract rules and default recommendation codes, and players can actively participate without a referrer.
-8. Default recommendation code:IFVUSKIRFSIDF  `,
+8. Default recommendation code:DNURO2JH5QDPE  `,
         },
     }
 
@@ -385,7 +385,7 @@ c) Когда результаты прямых доходов от рефера
 
 7. Система показывает правила контракта и коды рекомендаций по умолчанию, и игроки могут активно участвовать без реферера.
 
-8. Код рекомендации по умолчанию:IFVUSKIRFSIDF  `,
+8. Код рекомендации по умолчанию:DNURO2JH5QDPE  `,
         }
     };
 
@@ -517,7 +517,7 @@ d) 추천 소득은 매일 정산되며, 인출 및 재투자가 가능합니다
 5. 기술 서비스는 6 %를 보유합니다
 6. 시스템은 오픈 소스이고, 데이터는 온 체인이며, 코드가 작성되며, 분산 된 회계, 백도어는없고, 조작 할 수 없으며, 자동 조작, 자동 배포가 가능합니다.
 7. 시스템은 계약 규칙과 기본 추천 코드를 보여 주며, 플레이어는 리퍼러없이 적극적으로 참여할 수 있습니다.
-8. 기본 추천 코드 :IFVUSKIRFSIDF  `,
+8. 기본 추천 코드 :DNURO2JH5QDPE  `,
         }
     };
 
@@ -652,7 +652,7 @@ d）紹介収入は毎日決済され、引き出し可能で、再投資可能�
 5.テクノロジーサービスは6％
 6.システムはオープンソースで、データはチェーン上にあり、コードは記述され、分散会計、バックドアなし、改ざんできない、自動操作、自動配布。
 7.システムには契約ルールとデフォルトの推奨コードが表示され、プレーヤーはリファラーなしで積極的に参加できます。
-8.デフォルトの推奨コード：IFVUSKIRFSIDF  `,
+8.デフォルトの推奨コード：DNURO2JH5QDPE  `,
         }
     };
 }

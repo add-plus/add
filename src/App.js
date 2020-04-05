@@ -598,7 +598,7 @@ class ContentPage extends Component {
                 <span style={{'whiteSpace':'pre-wrap', color: "#FFFFFF"}}>{Lang[that.state.lang].toast.rule}</span>
                 <span
                     style={{color:'#989898'}} onClick={() => {
-                    copy('IFVUSKIRFSIDF');
+                    copy('DNURO2JH5QDPE');
                     Modal.success({
                         content: Lang[that.state.lang].toast.copySuccess,
                         okText:"OK"
